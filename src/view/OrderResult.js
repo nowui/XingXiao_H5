@@ -122,16 +122,12 @@ class OrderResult extends Component {
               :
               ''
           }
-          {
-            this.props.params.type == 'detail' ?
-              <div style={{margin: '100px 10px 0px 10px'}}>
-                <Button type="primary" onClick={this.handleOrder.bind(this)}>返回订单</Button>
-              </div>
-              :
-              <div style={{margin: '100px 10px 0px 10px'}}>
-                <Button type="primary" onClick={this.handleHome.bind(this)}>返回首页</Button>
-              </div>
-          }
+          <div style={{margin: '100px 10px 0px 10px'}}>
+            <Button type="primary" onClick={this.handleHome.bind(this)}>返回首页</Button>
+          </div>
+          <div style={{margin: '100px 10px 0px 10px'}}>
+            <Button onClick={this.handleOrder.bind(this)}>查看订单</Button>
+          </div>
         </div>
       </div>
     );

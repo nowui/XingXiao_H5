@@ -208,13 +208,13 @@ class OrderCheck extends Component {
       success: function (data) {
         if (typeof WeixinJSBridge == "undefined") {
           if (document.addEventListener) {
-            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data).bind(this), false);
+            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false);
           } else if (document.attachEvent) {
-            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data).bind(this));
-            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data).bind(this));
+            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data));
+            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data));
           }
         } else {
-          this.onBridgeReady(data).bind(this);
+          this.onBridgeReady(data);
         }
       }.bind(this),
       complete: function () {
@@ -243,7 +243,7 @@ class OrderCheck extends Component {
           }));
         } else {
           this.props.dispatch(routerRedux.push({
-            pathname: '/order/detail/' + data.orderId,
+            pathname: '/order/detail/ALL/' + data.orderId,
             query: {}
           }));
         }

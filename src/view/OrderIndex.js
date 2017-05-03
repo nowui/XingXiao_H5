@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Result, Tabs} from 'antd-mobile';
+import {NavBar, List, Result, Tabs} from 'antd-mobile';
 
 import constant from '../util/constant';
 import http from '../util/http';
@@ -74,7 +74,7 @@ class OrderIndex extends Component {
 
   handleClick(order_id) {
     this.props.dispatch(routerRedux.push({
-      pathname: '/order/detail/' + order_id,
+      pathname: '/order/detail/' + this.state.order_flow + '/' + order_id,
       query: {}
     }));
   }

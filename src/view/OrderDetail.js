@@ -51,7 +51,7 @@ class OrderDetail extends Component {
 
   handleBack() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/order/index/',
+      pathname: '/order/index/' + this.props.params.order_flow,
       query: {}
     }));
   }
@@ -61,18 +61,19 @@ class OrderDetail extends Component {
       url: '/order/pay',
       data: {
         order_id: this.props.params.order_id,
-        open_id: database.getWeChatOpenId()
+        open_id: database.getWeChatOpenId(),
+        pay_type: 'H5'
       },
       success: function (json) {
         if (typeof WeixinJSBridge == "undefined") {
           if (document.addEventListener) {
-            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data).bind(this), false);
+            document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false);
           } else if (document.attachEvent) {
-            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data).bind(this));
-            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data).bind(this));
+            document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data));
+            document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data));
           }
         } else {
-          this.onBridgeReady(data).bind(this);
+          this.onBridgeReady(data);
         }
       }.bind(this),
       complete: function () {
@@ -155,7 +156,7 @@ class OrderDetail extends Component {
           </List>
         </div>
         {
-          this.state.order.order_status == 'WAIT' ?
+          this.state.order.order_flow == 'WAIT_PAY' ?
             <div className={style.footer}>
               <div className={style.checkTotal}><span
                 className={style.checkTotalText}>实付总金额: ￥{this.state.order.order_amount.toFixed(2)}</span></div>

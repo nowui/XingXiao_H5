@@ -49,7 +49,7 @@ export default function ({history}) {
         </Route>
         <Route path="cart" component={Cart}/>
         <Route path='order/index/:order_flow' component={OrderIndex}/>
-        <Route path='order/detail/:order_id' component={OrderDetail}/>
+        <Route path='order/detail/:order_flow/:order_id' component={OrderDetail}/>
         <Route path="order/check/:type" component={OrderCheck}/>
         <Route path="order/result/:type/:order_id" component={OrderResult}/>
         <Route path="delivery/index/:type" component={DeliveryIndex}/>

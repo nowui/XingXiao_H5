@@ -15,7 +15,7 @@ class Knowledge extends Component {
     super(props);
 
     this.state = {
-      is_load: false
+      is_load: true
     }
   }
 

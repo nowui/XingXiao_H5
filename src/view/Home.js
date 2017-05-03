@@ -22,7 +22,9 @@ class Home extends Component {
 
   componentDidMount() {
     wechat.auth({
-      success: this.handleLoad()
+      success: function () {
+        this.handleLoad();
+      }.bind(this)
     });
   }
 
