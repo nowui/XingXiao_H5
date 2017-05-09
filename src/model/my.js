@@ -1,9 +1,12 @@
 export default {
 
-  namespace: 'delivery',
+  namespace: 'my',
 
   state: {
-    list: []
+    member_total_amount: 0,
+    WAIT_PAY: 0,
+    WAIT_SEND: 0,
+    WAIT_RECEIVE: 0
   },
 
   reducers: {

@@ -1,9 +1,10 @@
 export default {
 
-  namespace: 'delivery',
+  namespace: 'index',
 
   state: {
-    list: []
+    list: [],
+    scroll_top: 0,
   },
 
   reducers: {

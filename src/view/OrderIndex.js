@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, List, Result, Tabs} from 'antd-mobile';
+import {NavBar, List, Tabs} from 'antd-mobile';
 
 import constant from '../util/constant';
 import http from '../util/http';
@@ -16,8 +16,8 @@ class OrderIndex extends Component {
     this.state = {
       is_load: false,
       order_flow: '',
-      list: []
-    }
+      order_list: [],
+    };
   }
 
   componentDidMount() {
@@ -33,70 +33,68 @@ class OrderIndex extends Component {
       url: '/order/list',
       data: {
         page_index: 1,
-        page_size: 10,
-        list: []
+        page_size: 10
       },
       success: function (data) {
         this.props.dispatch({
           type: 'order/fetch',
           data: {
-            list: data
-          }
+            list: data,
+          },
         });
 
-        let list = [];
+        var order_list = [];
 
-        for(let i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.length; i++) {
           if (data[i].order_flow == this.props.params.order_flow || this.props.params.order_flow == 'ALL') {
-            list.push(data[i]);
+            order_list.push(data[i]);
           }
         }
 
         this.setState({
           order_flow: this.props.params.order_flow,
-          list: list
+          order_list: order_list
         });
       }.bind(this),
       complete: function () {
         this.setState({
-          is_load: true
+          is_load: true,
         });
-      }.bind(this)
+      }.bind(this),
     }).post();
   }
 
   handleBack() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/mine',
-      query: {}
+      pathname: '/my',
+      query: {},
     }));
   }
 
   handleClick(order_id) {
     this.props.dispatch(routerRedux.push({
       pathname: '/order/detail/' + this.state.order_flow + '/' + order_id,
-      query: {}
+      query: {},
     }));
   }
 
   handleTab(order_flow) {
-    let list = [];
+    var order_list = [];
 
-    for(let i = 0; i < this.props.order.list.length; i++) {
+    for (var i = 0; i < this.props.order.list.length; i++) {
       if (this.props.order.list[i].order_flow == order_flow || order_flow == 'ALL') {
-        list.push(this.props.order.list[i]);
+        order_list.push(this.props.order.list[i]);
       }
     }
 
     this.setState({
       order_flow: order_flow,
-      list: list
+      order_list: order_list
     });
 
     this.setState({
-      order_flow: order_flow
+      order_flow,
     });
-
   }
 
   render() {
@@ -105,62 +103,68 @@ class OrderIndex extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" leftContent="返回"
-                onLeftClick={this.handleBack.bind(this)}>我的订单</NavBar>
+        <NavBar
+          className={style.header} mode="light" leftContent="返回"
+          onLeftClick={this.handleBack.bind(this)}
+        >我的订单</NavBar>
         <div className={style.page}>
           <Tabs activeKey={this.state.order_flow} animated={false} onTabClick={this.handleTab.bind(this)}>
-            <TabPane tab="全部订单" key="ALL">
-            </TabPane>
-            <TabPane tab="代付款" key="WAIT_PAY">
-            </TabPane>
-            <TabPane tab="代发货" key="WAIT_SEND">
-            </TabPane>
-            <TabPane tab="代收货" key="WAIT_RECEIVE">
-            </TabPane>
-            <TabPane tab="已完成" key="FINISH">
-            </TabPane>
+            <TabPane tab="全部订单" key="ALL"/>
+            <TabPane tab="代付款" key="WAIT_PAY"/>
+            <TabPane tab="代发货" key="WAIT_SEND"/>
+            <TabPane tab="代收货" key="WAIT_RECEIVE"/>
+            <TabPane tab="已完成" key="FINISH"/>
           </Tabs>
-          <List>
-            {
-              this.state.list.map(function (item) {
+          {
+            this.state.order_list.map((order) => {
+              var order_status = '';
+              var order_status_list = constant.order_status_list;
+              for(var i = 0; i < order_status_list.length; i++) {
+                if (order_status_list[i].order_status_value == order.order_flow) {
+                  order_status = order_status_list[i].order_status_name;
 
-                let order_status = '';
-                if (item.order_status == 'WAIT_PAY') {
-                  order_status = '待付款';
-                } else if (item.order_status == 'EXPIRE') {
-                  order_status = '超时未付款';
-                } else if (item.order_status == 'WAIT_CONFIRM') {
-                  order_status = '已付款，待确认';
-                } else if (item.order_status == 'WAIT_SEND') {
-                  order_status = '待发货';
-                } else if (item.order_status == 'WAIT_RECEIVE') {
-                  order_status = '代收货';
-                } else if (item.order_status == 'FINISH') {
-                  order_status = '订单完成';
-                } else if (item.order_status == 'CANCEL') {
-                  order_status = '订单取消';
+                  break;
                 }
+              }
 
-                return (
-                  <Item wrap arrow="horizontal" key={item.order_id}
-                        onClick={this.handleClick.bind(this, item.order_id)}>
-                    <div>单号： {item.order_number}</div>
-                    <div>姓名： {item.order_delivery_name}</div>
-                    <div>地址： <span className={style.deliveryAddress}>{item.order_delivery_address}</span></div>
+              return (
+                <List style={{marginTop: '30px'}} key={order.order_id} onClick={this.handleClick.bind(this, order.order_id)}>
+                  <Item extra={order_status}>
+                    {order.order_number}
                   </Item>
-                )
-              }.bind(this))
-            }
-            {
-              this.state.is_load && this.state.list.length == 0 ?
-                <Result
-                  img={<img src={require('../assets/svg/empty.svg')} style={{width: '1.2rem', height: '1.2rem'}}/>}
-                  message={constant.empty}
-                />
-                :
-                ''
-            }
-          </List>
+                  {
+                    order.product_list.map((product) => {
+                      return (
+                        <Item
+                          key={product.product_id}
+                        >
+                          <div className={style.avatar}>
+                            <img src={constant.host + product.product_image_file} style={{width: '100%', height: '100%'}}/>
+                          </div>
+                          <div className={style.name}>{product.product_name}</div>
+                          <div className={style.totalAmount}>
+                            ￥{product.product_price} X {product.product_quantity}
+                          </div>
+                        </Item>
+                      );
+                    })
+                  }
+                  <Item>
+                    <span style={{fontSize: '28px'}}>共{order.product_list.length}件商品，合计：￥{order.order_amount}</span>
+                  </Item>
+                </List>
+              );
+            })
+          }
+          {
+            this.state.is_load && this.state.order_list.length == 0 ?
+              <view className={style.noData}>
+                <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
+                <view className={style.noDataText}>当前没有数据</view>
+              </view>
+              :
+              ''
+          }
         </div>
       </div>
     );

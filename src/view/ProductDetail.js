@@ -9,7 +9,7 @@ import http from '../util/http';
 
 import style from './style.css';
 
-class Product extends Component {
+class ProductDetail extends Component {
   constructor(props) {
     super(props);
 
@@ -39,7 +39,7 @@ class Product extends Component {
     http({
       url: '/product/find',
       data: {
-        product_id: '0551169341324bd2a72d77ff84857922',
+        product_id: this.props.params.product_id,
       },
       success: function (data) {
         this.setState({
@@ -176,15 +176,82 @@ class Product extends Component {
     return (
       <div>
         <NavBar
-          className={style.header} mode="light" iconName={false}
-        >爆水丸</NavBar>
+          className={style.header} mode="light" leftContent="返回"
+          onLeftClick={this.handleBack.bind(this)}
+          rightContent={[<Badge key={1} text={this.state.cart_count} onClick={this.handleGo.bind(this)}><img
+            className={style.cartIcon} src={require('../assets/svg/cart.svg')}
+            onClick={this.handleGo.bind(this)}
+          /></Badge>]}
+        >商品详情</NavBar>
         <div className={style.page}>
+          {
+            this.state.product.product_image_file_list.length == 0 ?
+              ''
+              :
+              <Carousel autoplay={this.state.product.product_image_file_list.length > 1} infinite={this.state.product.product_image_file_list.length > 1} style={{ height: `${document.documentElement.clientWidth}px` }}>
+                {
+                  this.state.product.product_image_file_list.map((item, index) => {
+                    return (
+                      <img key={index} style={{ width: `${document.documentElement.clientWidth}px`, height: `${document.documentElement.clientWidth}px` }} src={constant.host + item} />
+                    );
+                  })
+                }
+              </Carousel>
+          }
+          <List>
+            <Item>
+              {this.state.product.product_name}
+              <br />
+              {
+                this.state.product.product_price.length > 0 ?
+                  <span
+                    className={style.productPopupRedText}
+                  >￥{this.state.product.product_price[0].product_price.toFixed(2)}</span>
+                  :
+                  ''
+              }
+            </Item>
+          </List>
+          <WhiteSpace size="lg" />
+          <List>
+            <Item>
+              已选：{this.state.product_quantity} 个
+            </Item>
+            <Item>
+              <Stepper
+                style={{ width: '200px', minWidth: '2rem' }}
+                showNumber
+                max={99999}
+                min={1}
+                defaultValue={this.state.product_quantity}
+                onChange={this.handleQuantity.bind(this)}
+                useTouch={!window.isPC}
+              />
+            </Item>
+          </List>
+          <WhiteSpace size="lg" />
+          <div
+            className={style.productContent}
+            dangerouslySetInnerHTML={{ __html: this.state.product.product_content }}
+          />
+        </div>
+        <div className={style.footer}>
+          <div className={style.productIndex} onClick={this.handleIndex.bind(this)}>
+            <img className={style.productIcon} src={require('../assets/svg/index.svg')} />
+            <div className={style.productFont}>首页</div>
+          </div>
+          <div className={style.productFavor} onClick={this.handleFavor.bind(this)}>
+            <img className={style.productIcon} src={require('../assets/svg/favor.svg')} />
+            <div className={style.productFont}>收藏</div>
+          </div>
+          <div className={style.productAddCart} onClick={this.handleCart.bind(this)}>加入购物车</div>
+          <div className={style.productBuy} onClick={this.handleBuy.bind(this)}>立即购买</div>
         </div>
       </div>
     );
   }
 }
 
-Product.propTypes = {};
+ProductDetail.propTypes = {};
 
-export default connect(({}) => ({}))(Product);
+export default connect(({}) => ({}))(ProductDetail);

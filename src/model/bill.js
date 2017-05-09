@@ -1,6 +1,5 @@
 export default {
-
-  namespace: 'delivery',
+  namespace: 'bill',
 
   state: {
     list: []

@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import {connect} from 'dva';
-import {routerRedux} from 'dva/router';
+import React, { Component } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 
-import {NavBar, WhiteSpace} from 'antd-mobile';
+import { NavBar } from 'antd-mobile';
 
-import database from '../util/database';
 import http from '../util/http';
 import style from './style.css';
 
@@ -13,14 +12,12 @@ class Qrcode extends Component {
     super(props);
 
     this.state = {
-      qrcode: ''
-    }
+      qrcode: '',
+    };
   }
 
   componentDidMount() {
-    if (database.getMemberLevel().member_level_value < 3) {
-      this.handleLoad();
-    }
+    this.handleLoad();
   }
 
   componentWillUnmount() {
@@ -32,38 +29,40 @@ class Qrcode extends Component {
       url: '/member/qrcode/find',
       data: {},
       success: function (data) {
-        database.setSceneQrcode(data);
-
         this.setState({
-          qrcode: data
+          qrcode: data,
         });
       }.bind(this),
-      complete: function () {
+      complete() {
 
-      }.bind(this)
+      },
     }).post();
   }
 
   handleBack() {
     this.props.dispatch(routerRedux.push({
-      pathname: '/mine',
-      query: {}
+      pathname: '/my',
+      query: {},
     }));
   }
 
   render() {
     return (
       <div>
-        <NavBar className={style.header} mode="light" leftContent="返回"
-                onLeftClick={this.handleBack.bind(this)}>我的二维码</NavBar>
+        <NavBar
+          className={style.header} mode="light" leftContent="返回"
+          onLeftClick={this.handleBack.bind(this)}
+        >我的二维码</NavBar>
         <div className={style.page}>
           {
             this.state.qrcode == '' ?
               ''
               :
-              <img src={this.state.qrcode} style={{
-                width: '100%'
-              }}/>
+              <img
+                src={this.state.qrcode} style={{
+                  width: '100%',
+                }}
+              />
           }
         </div>
       </div>
