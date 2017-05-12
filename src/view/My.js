@@ -147,44 +147,19 @@ class My extends Component {
               </div>
             </Item>
           </List>
-          {
-            storage.getMember().member_level_value < 3 ?
-              <WhiteSpace size="lg"/>
-              :
-              ''
-          }
-          {
-            storage.getMember().member_level_value < 3 ?
-              <List>
-                <Item
-                  thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"
-                  onClick={this.handleQrcode.bind(this)}
-                >
-                  我的二维码
-                </Item>
-                <Item
-                  thumb={require('../assets/svg/friend.svg')} arrow="horizontal"
-                  onClick={this.handleTeam.bind(this)}
-                >
-                  我的团队
-                </Item>
-              </List>
-              :
-              ''
-          }
           <WhiteSpace size="lg"/>
           <List>
+            <Item
+              thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"
+              onClick={this.handleQrcode.bind(this)}
+            >
+              我的二维码
+            </Item>
             <Item
               thumb={require('../assets/svg/location.svg')} arrow="horizontal"
               onClick={this.handleDelivery.bind(this)}
             >
               我的地址
-            </Item>
-            <Item
-              thumb={require('../assets/svg/favor_active.svg')} arrow="horizontal"
-              onClick={this.handleFavor.bind(this)}
-            >
-              我的收藏
             </Item>
           </List>
         </div>

@@ -16,7 +16,7 @@ class OrderResult extends Component {
       result: 'confirm',
       is_pay: false,
       is_error: false,
-      order: {},
+      order: {}
     };
   }
 
@@ -38,11 +38,11 @@ class OrderResult extends Component {
         if (data.order_is_pay) {
           this.setState({
             result: 'success',
-            order: data,
+            order: data
           });
         } else if (this.state.count < 2) {
           this.setState({
-            count: this.state.count + 1,
+            count: this.state.count + 1
           });
 
           setTimeout(() => {

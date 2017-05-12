@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, Carousel} from 'antd-mobile';
+import {NavBar, WhiteSpace, List} from 'antd-mobile';
 
 import constant from '../util/constant';
 import http from '../util/http';
@@ -14,64 +14,91 @@ class Index extends Component {
     super(props);
 
     this.state = {
-      category_list: [],
+      is_load: false
     };
   }
 
   componentDidMount() {
-    if (this.props.index.list.length == 0) {
-      this.handleLoad();
-    } else {
-      document.body.scrollTop = this.props.index.scroll_top;
-    }
-
-    var category_list = constant.category_list.concat();
-    category_list.splice(0, 1);
-    category_list.push(constant.category_list[0]);
-
-    this.setState({
-      category_list,
-    });
+    this.handleLoad();
   }
 
   componentWillUnmount() {
-    this.props.dispatch({
-      type: 'index/fetch',
-      data: {
-        scroll_top: document.body.scrollTop,
-      },
-    });
+
   }
 
   handleLoad() {
     http({
-      url: '/product/hot/list',
-      data: {},
+      url: '/member/team/list',
+      data: {
+        page_index: 0,
+        page_size: 0,
+      },
       success: function (data) {
-        for (var i = 0; i < data.length; i++) {
-          data[i].product_image_file = constant.host + data[i].product_image_file;
-        }
-
         this.props.dispatch({
-          type: 'index/fetch',
+          type: 'team/fetch',
           data: {
             list: data,
           },
         });
       }.bind(this),
       complete: function () {
-        document.body.scrollTop = this.props.index.scroll_top;
+        this.setState({
+          is_load: true,
+        });
       }.bind(this),
     }).post();
   }
 
+  handleClick(member_id) {
+    this.props.dispatch(routerRedux.push({
+      pathname: '/team/detail/' + member_id,
+      query: {},
+    }));
+  }
+
   render() {
+    const Item = List.Item;
+
     return (
       <div>
         <NavBar className={style.header} mode="light" iconName={false}>我的团队</NavBar>
         <div className={style.page2}>
-
-          <div style={{float: 'left', width: '100%', height: '7px'}}/>
+          <WhiteSpace size="lg"/>
+          {
+            this.props.team.list.length > 0 ?
+              <List>
+                {
+                  this.props.team.list.map((item) => {
+                    return (
+                      <Item arrow="horizontal"
+                            extra={item.member_status ? ('进货额￥' + item.member_total_amount.toFixed(2)) : '待审核'}
+                            wrap key={item.member_id}
+                            onClick={this.handleClick.bind(this, item.member_id)}
+                      >
+                        <div className={style.teamAvatar}>
+                          <img src={item.user_avatar} style={{width: '100%', height: '100%'}}/>
+                        </div>
+                        <div className={style.teamName}>{item.member_name}</div>
+                        <div className={style.teamLevel}>
+                          {item.member_level_name}
+                        </div>
+                      </Item>
+                    );
+                  })
+                }
+              </List>
+              :
+              ''
+          }
+          {
+            this.state.is_load && this.props.team.list.length == 0 ?
+              <view className={style.noData}>
+                <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
+                <view className={style.noDataText}>当前没有数据</view>
+              </view>
+              :
+              ''
+          }
         </div>
       </div>
     );
@@ -80,4 +107,4 @@ class Index extends Component {
 
 Index.propTypes = {};
 
-export default connect(({index}) => ({index}))(Index);
+export default connect(({team}) => ({team}))(Index);

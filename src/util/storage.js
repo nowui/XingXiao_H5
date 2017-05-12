@@ -21,7 +21,7 @@ function getToken() {
 
   if (token == null) {
     if (constant.is_developer) {
-      return 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTQzMzY5MTEsImV4cCI6MTUyNTg3MjkxMSwiYXV0aG9yaXphdGlvbl9pZCI6IjcwOTliOWI1NGJlYzRkZWQ5N2MwMTExNTc0ODNkNWU5IiwidXNlcl9pZCI6IjY2YjhjYWM4ZTkzODQwZGE4NTdmNGRjMDgxMmE0ZTNkIn0.N-DiYuC2Szf9bvXycG9W_jkSKpcVndvF0gHYyNH7kPcTcmHUzgI7CsydQY55LEsszlpWVnq6TmYjFkLSEHanRQ';
+      return 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTQ1ODEwNjQsImV4cCI6MTUyNjExNzA2NCwiYXV0aG9yaXphdGlvbl9pZCI6ImU4YTJlNTZlNzlhYjRhYTc5NWZjNmNhMWYwNDE2ZjYyIiwidXNlcl9pZCI6IjY2YjhjYWM4ZTkzODQwZGE4NTdmNGRjMDgxMmE0ZTNkIn0.hJ3nf6x0uQjDTL0yQhkloNutPuolwIIa8GQnAxngLmaynYNUKnB1TK_3LaKJcigZhvYjqEarFkkRpPWkFIK-7Q';
     } else {
       return '';
     }
@@ -51,7 +51,7 @@ function setProduct(product) {
 }
 
 function removeProduct() {
-  wx.removeStorageSync(product_key);
+  localStorage.removeItem(product_key);
 }
 
 function getCart() {
@@ -95,7 +95,7 @@ function addCart(product) {
 }
 
 function removeCart() {
-  wx.removeStorageSync(cart_key);
+  localStorage.removeItem(cart_key);
 }
 
 function getDelivery() {
@@ -117,7 +117,7 @@ function setDelivery(delivery) {
 }
 
 function removeDelivery() {
-  wx.removeStorageSync(delivery_key);
+  localStorage.removeItem(delivery_key);
 }
 
 function getMember() {
@@ -127,8 +127,8 @@ function getMember() {
     if (constant.is_developer) {
       return {
         "user_name": "Ronaldo",
-        "user_avatar": "http://wx.qlogo.cn/mmopen/9FxxcxLpKVsTsPshsySRq7W5TDVr6dticxqKribaEGFfUthzxoRrbknym1beVH9mlE5MQtK1KqlyznRxMRpder6w7aEUXI5pEW/0",
-        "member_level_id": "675437f6b82e437d9c577a30d42516e9",
+        "user_avatar": "http://wx.qlogo.cn/mmopen/5RkyIJ9644qtLkJ3VDSfbhx06SiaspAxv5bCsb7F3g01UkRPo7pLsw7j6vReqLKYbiaqyiaiajZZYK4zjD0HQKk8O3yqoNbqia30N/0",
+        "member_level_id": "d4f6d4ee37974fb3974026c919d3c22f",
         "member_level_value": "1"
       };
     } else {

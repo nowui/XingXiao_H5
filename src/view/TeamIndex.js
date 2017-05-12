@@ -12,9 +12,7 @@ class TeamIndex extends Component {
     super(props);
 
     this.state = {
-      is_load: false,
-      is_list: false,
-      team_id: '',
+      is_load: false
     };
   }
 
@@ -30,8 +28,8 @@ class TeamIndex extends Component {
     http({
       url: '/member/team/list',
       data: {
-        page_index: 1,
-        page_size: 10,
+        page_index: 0,
+        page_size: 0,
       },
       success: function (data) {
         this.props.dispatch({

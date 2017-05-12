@@ -48,7 +48,7 @@ class OrderDetail extends Component {
           }
         }
         this.setState({
-          order: data,
+          order: data
         });
       }.bind(this),
       complete() {

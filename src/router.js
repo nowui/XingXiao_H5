@@ -16,7 +16,7 @@ import OrderResult from './view/OrderResult';
 import DeliveryIndex from './view/DeliveryIndex';
 import DeliveryDetail from './view/DeliveryDetail';
 import FavorIndex from './view/FavorIndex';
-import TeamIndex from './view/TeamIndex';
+import TeamDetail from './view/TeamDetail';
 import BillIndex from './view/BillIndex';
 import BillMemberIndex from './view/BillMemberIndex';
 import Qrcode from './view/Qrcode';
@@ -55,7 +55,7 @@ export default function ({ history }) {
         <Route path="delivery/add/:type" component={DeliveryDetail} />
         <Route path="delivery/edit/:type/:delivery_id" component={DeliveryDetail} />
         <Route path="favor/index" component={FavorIndex} />
-        <Route path="team/index" component={TeamIndex} />
+        <Route path="team/detail/:member_id" component={TeamDetail} />
         <Route path="bill/index" component={BillIndex} />
         <Route path="bill/member/index/:member_id" component={BillMemberIndex} />
         <Route path="qrcode" component={Qrcode} />

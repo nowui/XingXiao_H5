@@ -23,7 +23,7 @@ class ProductDetail extends Component {
         product_price: [],
         product_stock: 0,
         sku_id: '',
-      },
+      }
     };
   }
 
