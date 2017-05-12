@@ -33,6 +33,8 @@ class OrderCheck extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     http({
       url: '/order/check',
       data: {
@@ -105,7 +107,7 @@ class OrderCheck extends Component {
           product_list: product_list,
           product_total: product_total.toFixed(2),
           freight: new Number(freight).toFixed(2),
-          total: new Number(total).toFixed(2),
+          total: new Number(total).toFixed(2)
         });
       }.bind(this),
       complete() {
@@ -119,12 +121,9 @@ class OrderCheck extends Component {
   }
 
   handleBack() {
-    if (this.props.params.type.indexOf('product_') > -1) {
-      const url = this.props.params.type.replace('product_detail_', 'product/detail/');
-      const index = url.lastIndexOf('_');
-
+    if (this.props.params.type.indexOf('product') > -1) {
       this.props.dispatch(routerRedux.push({
-        pathname: '/' + url.substring(0, index) + '/' + url.substring(index + 1, url.length),
+        pathname: '/product',
         query: {},
       }));
     }

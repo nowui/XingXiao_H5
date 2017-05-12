@@ -15,6 +15,8 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     if (storage.getToken() != '') {
       this.props.dispatch(routerRedux.push({
         pathname: '/index',

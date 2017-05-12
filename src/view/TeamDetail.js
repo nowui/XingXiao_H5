@@ -22,6 +22,8 @@ class TeamDetail extends Component {
   }
 
   componentDidMount() {
+    document.body.scrollTop = 0;
+
     this.handleLoad();
   }
 
@@ -99,7 +101,7 @@ class TeamDetail extends Component {
           <WhiteSpace size="lg"/>
           <List>
             <Item
-                  extra={this.state.member.member_status ? ('进货额￥' + this.state.member.member_total_amount.toFixed(2)) : '待审核'}
+              extra={this.state.member.member_status ? ('进货额￥' + this.state.member.member_total_amount.toFixed(2)) : '待审核'}
             >
               <div className={style.teamAvatar}>
                 <img src={this.state.member.user_avatar} style={{width: '100%', height: '100%'}}/>
@@ -119,7 +121,9 @@ class TeamDetail extends Component {
                 {
                   this.state.member.member_level_list.map((item) => {
                     return (
-                      <RadioItem key={item.member_level_id} checked={item.member_level_id === this.state.member_level_id} onChange={this.handleChange.bind(this, item.member_level_id)}>
+                      <RadioItem key={item.member_level_id}
+                                 checked={item.member_level_id === this.state.member_level_id}
+                                 onChange={this.handleChange.bind(this, item.member_level_id)}>
                         {item.member_level_name}
                       </RadioItem>
                     );
@@ -128,15 +132,15 @@ class TeamDetail extends Component {
               </List>
           }
           {
-            this.state.member.member_status ?
-              ''
-              :
+            this.state.is_load && !this.state.member.member_status?
               <div className={style.footer}>
                 <div className={style.buttonSubmit}
                      onClick={this.handleSubmit.bind(this)}
                 >通过审核
                 </div>
               </div>
+              :
+              ''
           }
         </div>
       </div>
