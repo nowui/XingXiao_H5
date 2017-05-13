@@ -20,6 +20,7 @@ app.model(require('./model/favor'));
 app.model(require('./model/team'));
 app.model(require('./model/bill'));
 app.model(require('./model/my'));
+app.model(require('./model/product'));
 
 // 4. Router
 app.router(require('./router'));

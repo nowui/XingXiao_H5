@@ -91,6 +91,19 @@ class TeamDetail extends Component {
     const Item = List.Item;
     const RadioItem = Radio.RadioItem;
 
+    var content = '';
+
+    if (this.state.is_load) {
+      if (this.state.member.member_status) {
+        content = <div className={style.teamMoney}>
+          <div>当月进货：￥{this.state.member.member_total_amount.toFixed(2)}</div>
+          <div>全部进货：￥{this.state.member.member_total_amount.toFixed(2)}</div>
+        </div>
+      } else {
+        content = '待审核';
+      }
+    }
+
     return (
       <div>
         <NavBar
@@ -101,7 +114,7 @@ class TeamDetail extends Component {
           <WhiteSpace size="lg"/>
           <List>
             <Item
-              extra={this.state.member.member_status ? ('进货额￥' + this.state.member.member_total_amount.toFixed(2)) : '待审核'}
+              extra={content}
             >
               <div className={style.teamAvatar}>
                 <img src={this.state.member.user_avatar} style={{width: '100%', height: '100%'}}/>
@@ -132,7 +145,7 @@ class TeamDetail extends Component {
               </List>
           }
           {
-            this.state.is_load && !this.state.member.member_status?
+            this.state.is_load && !this.state.member.member_status ?
               <div className={style.footer}>
                 <div className={style.buttonSubmit}
                      onClick={this.handleSubmit.bind(this)}

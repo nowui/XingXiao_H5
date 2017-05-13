@@ -71,9 +71,13 @@ class Index extends Component {
               <List>
                 {
                   this.props.team.list.map((item) => {
+                    var content = <div className={style.teamMoney}>
+                                    <div>当月进货：￥{item.member_total_amount.toFixed(2)}</div>
+                                    <div>全部进货：￥{item.member_total_amount.toFixed(2)}</div>
+                                  </div>
                     return (
                       <Item arrow="horizontal"
-                            extra={item.member_status ? ('进货额￥' + item.member_total_amount.toFixed(2)) : '待审核'}
+                            extra={item.member_status ? content : '待审核'}
                             wrap key={item.member_id}
                             onClick={this.handleClick.bind(this, item.member_id)}
                       >

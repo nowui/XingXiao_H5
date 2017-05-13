@@ -512,6 +512,10 @@ body, html {
   font-size: 28px;
 }
 
+.teamMoney {
+  font-size: 28px;
+}
+
 .buttonSubmit {
   float: left;
   width: 100%;

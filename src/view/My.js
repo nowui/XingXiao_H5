@@ -36,12 +36,7 @@ class My extends Component {
       success: function (data) {
         this.props.dispatch({
           type: 'my/fetch',
-          data: {
-            member_total_amount: data.member_total_amount,
-            WAIT_PAY: data.WAIT_PAY,
-            WAIT_SEND: data.WAIT_SEND,
-            WAIT_RECEIVE: data.WAIT_RECEIVE,
-          },
+          data: data,
         });
       }.bind(this),
       complete() {
@@ -111,7 +106,7 @@ class My extends Component {
               </div>
               <div className={style.name}>{storage.getMember().user_name}</div>
               <div className={style.totalAmount}>
-                账户余额：<span className={style.money}>￥{this.props.my.member_total_amount.toFixed(2)}</span>
+                {this.props.my.member_level_name}
               </div>
             </Item>
           </List>
@@ -151,12 +146,17 @@ class My extends Component {
           </List>
           <WhiteSpace size="lg"/>
           <List>
-            <Item
-              thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"
-              onClick={this.handleQrcode.bind(this)}
-            >
-              我的二维码
-            </Item>
+            {
+              this.props.my.member_status ?
+                <Item
+                  thumb={require('../assets/svg/qr_code.svg')} arrow="horizontal"
+                  onClick={this.handleQrcode.bind(this)}
+                >
+                  我的二维码
+                </Item>
+                :
+                ''
+            }
             <Item
               thumb={require('../assets/svg/location.svg')} arrow="horizontal"
               onClick={this.handleDelivery.bind(this)}

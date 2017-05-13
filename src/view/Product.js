@@ -14,25 +14,16 @@ class Product extends Component {
     super(props);
 
     this.state = {
-      is_load: false,
-      cart_count: storage.getCart().length,
-      product_quantity: 2500,
-      product_quantity_max: 2500,
-      product_total: 0,
-      product: {
-        product_image_file: '',
-        product_image_file_list: [],
-        product_price: [],
-        product_stock: 0,
-        sku_id: ''
-      }
+
     };
   }
 
   componentDidMount() {
     document.body.scrollTop = 0;
 
-    this.handleLoad();
+    if (this.props.product.product_id == '') {
+      this.handleLoad();
+    }
   }
 
   componentWillUnmount() {
@@ -60,23 +51,23 @@ class Product extends Component {
 
         product_total = product_price[0].product_price * product_quantity_max;
 
-        var product_total =
-          this.setState({
+        this.props.dispatch({
+          type: 'product/fetch',
+          data: {
             is_load: true,
             product_quantity: product_quantity_max,
             product_quantity_max: product_quantity_max,
             product_total: product_total,
-            product: {
-              product_id: data.product_id,
-              product_name: data.product_name,
-              product_image_file: data.product_image_file,
-              product_image_file_list: data.product_image_file_list,
-              product_price: product_price,
-              product_stock: data.sku_list[0].product_stock,
-              sku_id: data.sku_list[0].sku_id,
-              product_content: data.product_content
-            },
-          });
+            product_id: data.product_id,
+            product_name: data.product_name,
+            product_image_file: data.product_image_file,
+            product_image_file_list: data.product_image_file_list,
+            product_price: product_price,
+            product_stock: data.sku_list[0].product_stock,
+            sku_id: data.sku_list[0].sku_id,
+            product_content: data.product_content
+          },
+        });
       }.bind(this),
       complete() {
 
@@ -87,27 +78,30 @@ class Product extends Component {
   handleChange(product_quantity) {
     var product_total = 0;
 
-    product_total = this.state.product.product_price[0].product_price * product_quantity;
+    product_total = this.props.product.product_price[0].product_price * product_quantity;
 
-    this.setState({
-      product_quantity: product_quantity,
-      product_total: product_total
+    this.props.dispatch({
+      type: 'product/fetch',
+      data: {
+        product_quantity: product_quantity,
+        product_total: product_total
+      },
     });
   }
 
   handleBuy() {
     storage.setProduct([{
-      product_id: this.state.product.product_id,
-      product_name: this.state.product.product_name,
-      product_image_file: this.state.product.product_image_file,
-      product_price: this.state.product.product_price,
-      product_quantity: this.state.product_quantity,
-      sku_id: this.state.product.sku_id,
+      product_id: this.props.product.product_id,
+      product_name: this.props.product.product_name,
+      product_image_file: this.props.product.product_image_file,
+      product_price: this.props.product.product_price,
+      product_quantity: this.props.product.product_quantity,
+      sku_id: this.props.product.sku_id,
     }]);
 
     this.props.dispatch(routerRedux.push({
       pathname: '/order/check/product',
-      query: {},
+      query: {}
     }));
   }
 
@@ -121,23 +115,23 @@ class Product extends Component {
         >爆水丸</NavBar>
         <div className={style.page3}>
           {
-            this.state.is_load ?
+            this.props.product.is_load ?
               <img style={{
                 width: document.documentElement.clientWidth + 'px',
                 height: document.documentElement.clientWidth + 'px'
-              }} src={constant.host + this.state.product.product_image_file}/>
+              }} src={constant.host + this.props.product.product_image_file}/>
               :
               ''
           }
           <List>
             <Item>
-              {this.state.product.product_name}
+              {this.props.product.product_name}
               <br />
               {
-                this.state.product.product_price.length > 0 ?
+                this.props.product.product_price.length > 0 ?
                   <span
                     className={style.productPopupRedText}
-                  >￥{this.state.product.product_price[0].product_price.toFixed(2)}</span>
+                  >￥{this.props.product.product_price[0].product_price.toFixed(2)}</span>
                   :
                   ''
               }
@@ -146,21 +140,21 @@ class Product extends Component {
           <WhiteSpace size="lg"/>
           <List>
             <Item>
-              已选：{this.state.product_quantity} 个
+              已选：{this.props.product.product_quantity} 个
             </Item>
             <Item extra={
               <Stepper
                 style={{width: '100%', minWidth: '2rem'}}
                 showNumber={false}
                 max={99999}
-                min={this.state.product_quantity_max}
-                defaultValue={this.state.product_quantity}
+                min={this.props.product.product_quantity_max}
+                defaultValue={this.props.product.product_quantity}
                 onChange={this.handleChange.bind(this)}
                 useTouch={!window.isPC}
               />}
             >
               <div className={style.productPopupQuantity}>
-                <div className={style.productPopupQuantityNumber}>{this.state.product_quantity}</div>
+                <div className={style.productPopupQuantityNumber}>{this.props.product.product_quantity}</div>
               </div>
               购买数量
             </Item>
@@ -168,12 +162,12 @@ class Product extends Component {
           <WhiteSpace size="lg"/>
           <div
             className={style.productContent}
-            dangerouslySetInnerHTML={{__html: this.state.product.product_content}}
+            dangerouslySetInnerHTML={{__html: this.props.product.product_content}}
           />
         </div>
         <div className={style.footer2}>
           <div className={style.checkTotal}>
-            <span className={style.checkTotalText}>总金额: ￥{this.state.product_total}</span>
+            <span className={style.checkTotalText}>总金额: ￥{this.props.product.product_total}</span>
           </div>
           <div className={style.productBuy} onClick={this.handleBuy.bind(this)}>立即购买</div>
         </div>
@@ -184,4 +178,4 @@ class Product extends Component {
 
 Product.propTypes = {};
 
-export default connect(({}) => ({}))(Product);
+export default connect(({product}) => ({product}))(Product);

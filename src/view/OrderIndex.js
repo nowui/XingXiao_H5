@@ -145,7 +145,7 @@ class OrderIndex extends Component {
                           </div>
                           <div className={style.name}>{product.product_name}</div>
                           <div className={style.totalAmount}>
-                            ￥{product.product_price} X {product.product_quantity}
+                            ￥{product.order_product_price} X {product.order_product_quantity}
                           </div>
                         </Item>
                       );

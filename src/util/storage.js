@@ -129,6 +129,7 @@ function getMember() {
         "user_name": "Ronaldo",
         "user_avatar": "http://wx.qlogo.cn/mmopen/5RkyIJ9644qtLkJ3VDSfbhx06SiaspAxv5bCsb7F3g01UkRPo7pLsw7j6vReqLKYbiaqyiaiajZZYK4zjD0HQKk8O3yqoNbqia30N/0",
         "member_level_id": "d4f6d4ee37974fb3974026c919d3c22f",
+        "member_level_name": "",
         "member_level_value": "1"
       };
     } else {

@@ -17,7 +17,7 @@ class Cart extends Component {
       is_select: false,
       is_edit: false,
       cart_total: 0,
-      cart_list: storage.getCart(),
+      cart_list: storage.getCart()
     };
   }
 
@@ -59,7 +59,7 @@ class Cart extends Component {
       is_all: is_all,
       is_select: is_select,
       cart_total: cart_total,
-      cart_list: cart_list,
+      cart_list: cart_list
     });
   }
 
