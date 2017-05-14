@@ -21,9 +21,7 @@ class Product extends Component {
   componentDidMount() {
     document.body.scrollTop = 0;
 
-    if (this.props.product.product_id == '') {
-      this.handleLoad();
-    }
+    this.handleLoad();
   }
 
   componentWillUnmount() {
@@ -32,31 +30,31 @@ class Product extends Component {
 
   handleLoad() {
     http({
-      url: '/product/find',
+      url: '/xingxiao/product/find',
       data: {
         product_id: '0551169341324bd2a72d77ff84857922',
       },
       success: function (data) {
-        var product_quantity_max = 2500;
+        var product_quantity_min = data.product_quantity_min;
         var product_price = JSON.parse(data.sku_list[0].product_price);
         var product_total = 0;
 
         if (storage.getMember().member_level_value == 6) {
-          product_quantity_max = 10;
+          product_quantity_min = 10;
         } else if (storage.getMember().member_level_value == 5) {
-          product_quantity_max = 100;
+          product_quantity_min = 100;
         } else if (storage.getMember().member_level_value == 4) {
-          product_quantity_max = 600;
+          product_quantity_min = 600;
         }
 
-        product_total = product_price[0].product_price * product_quantity_max;
+        product_total = product_price[0].product_price * product_quantity_min;
 
         this.props.dispatch({
           type: 'product/fetch',
           data: {
             is_load: true,
-            product_quantity: product_quantity_max,
-            product_quantity_max: product_quantity_max,
+            product_quantity: product_quantity_min,
+            product_quantity_min: product_quantity_min,
             product_total: product_total,
             product_id: data.product_id,
             product_name: data.product_name,
@@ -147,7 +145,7 @@ class Product extends Component {
                 style={{width: '100%', minWidth: '2rem'}}
                 showNumber={false}
                 max={99999}
-                min={this.props.product.product_quantity_max}
+                min={this.props.product.product_quantity_min}
                 defaultValue={this.props.product.product_quantity}
                 onChange={this.handleChange.bind(this)}
                 useTouch={!window.isPC}
@@ -169,7 +167,7 @@ class Product extends Component {
           <div className={style.checkTotal}>
             <span className={style.checkTotalText}>总金额: ￥{this.props.product.product_total}</span>
           </div>
-          <div className={style.productBuy} onClick={this.handleBuy.bind(this)}>立即购买</div>
+          <div className={style.productBuy} onClick={this.handleBuy.bind(this)}>立即进货</div>
         </div>
       </div>
     );

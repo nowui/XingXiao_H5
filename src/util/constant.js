@@ -8,9 +8,9 @@ export default {
   placeholder: '请输入',
   empty: '当前没有数据',
   platform: 'H5',
-  version: '100.0.0',
-  is_developer: true,
-  // is_developer: false,
+  version: '100.0.1',
+  // is_developer: true,
+  is_developer: false,
   // host: 'http://localhost:8080',
   host: 'http://api.xingxiao.nowui.com',
   category_list: [{

@@ -124,14 +124,14 @@ class OrderCheck extends Component {
     if (this.props.params.type.indexOf('product') > -1) {
       this.props.dispatch(routerRedux.push({
         pathname: '/product',
-        query: {},
+        query: {}
       }));
     }
 
     if (this.props.params.type.indexOf('cart') > -1) {
       this.props.dispatch(routerRedux.push({
         pathname: '/cart',
-        query: {},
+        query: {}
       }));
     }
   }
@@ -139,7 +139,7 @@ class OrderCheck extends Component {
   handleDelivery() {
     this.props.dispatch(routerRedux.push({
       pathname: '/delivery/index/order_check_' + this.props.params.type,
-      query: {},
+      query: {}
     }));
   }
 

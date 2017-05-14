@@ -15,9 +15,8 @@ class TeamDetail extends Component {
     this.state = {
       is_load: false,
       member_level_id: '',
-      member: {
-        member_level_list: []
-      }
+      order_list: [],
+      member_level_list: []
     };
   }
 
@@ -33,18 +32,16 @@ class TeamDetail extends Component {
 
   handleLoad() {
     http({
-      url: '/member/team/find',
+      url: '/order/team/find',
       data: {
-        member_id: this.props.params.member_id,
+        member_id: this.props.params.member_id
       },
       success: function (data) {
-        this.setState({
-          member: data,
-        });
+        this.setState(data);
       }.bind(this),
       complete: function () {
         this.setState({
-          is_load: true,
+          is_load: true
         });
       }.bind(this),
     }).post();
@@ -67,12 +64,14 @@ class TeamDetail extends Component {
   handleSubmit() {
     if (this.state.member_level_id == '') {
       Toast.fail('请选择会员等级', constant.duration);
+
+      return;
     }
 
     http({
       url: '/member/children/update',
       data: {
-        member_id: this.state.member.member_id,
+        member_id: this.state.member_id,
         member_level_id: this.state.member_level_id
       },
       success: function (data) {
@@ -87,6 +86,10 @@ class TeamDetail extends Component {
     }).post();
   }
 
+  handleClick() {
+
+  }
+
   render() {
     const Item = List.Item;
     const RadioItem = Radio.RadioItem;
@@ -94,10 +97,10 @@ class TeamDetail extends Component {
     var content = '';
 
     if (this.state.is_load) {
-      if (this.state.member.member_status) {
+      if (this.state.member_status) {
         content = <div className={style.teamMoney}>
-          <div>当月进货：￥{this.state.member.member_total_amount.toFixed(2)}</div>
-          <div>全部进货：￥{this.state.member.member_total_amount.toFixed(2)}</div>
+          <div>当月进货：￥{this.state.member_month_order_amount}</div>
+          <div>全部进货：￥{this.state.member_all_order_amount}</div>
         </div>
       } else {
         content = '待审核';
@@ -117,22 +120,62 @@ class TeamDetail extends Component {
               extra={content}
             >
               <div className={style.teamAvatar}>
-                <img src={this.state.member.user_avatar} style={{width: '100%', height: '100%'}}/>
+                <img src={this.state.user_avatar} style={{width: '100%', height: '100%'}}/>
               </div>
-              <div className={style.teamName}>{this.state.member.member_name}</div>
+              <div className={style.teamName}>{this.state.member_name}</div>
               <div className={style.teamLevel}>
-                {this.state.member.member_level_name}
+                {this.state.member_level_name}
               </div>
             </Item>
           </List>
-          <WhiteSpace size="lg"/>
           {
-            this.state.member.member_status ?
+            this.state.order_list.map((order) => {
+              var order_status = '';
+              var order_status_list = constant.order_status_list;
+              for(var i = 0; i < order_status_list.length; i++) {
+                if (order_status_list[i].order_status_value == order.order_flow) {
+                  order_status = order_status_list[i].order_status_name;
+
+                  break;
+                }
+              }
+
+              return (
+                <List style={{marginTop: '30px'}} key={order.order_id} onClick={this.handleClick.bind(this, order.order_id)}>
+                  <Item extra={order_status}>
+                    {order.order_number}
+                  </Item>
+                  {
+                    order.product_list.map((product) => {
+                      return (
+                        <Item
+                          key={product.product_id}
+                        >
+                          <div className={style.avatar}>
+                            <img src={constant.host + product.product_image_file} style={{width: '100%', height: '100%'}}/>
+                          </div>
+                          <div className={style.name}>{product.product_name}</div>
+                          <div className={style.totalAmount}>
+                            ￥{product.order_product_price} X {product.order_product_quantity}
+                          </div>
+                        </Item>
+                      );
+                    })
+                  }
+                  <Item>
+                    <span style={{fontSize: '28px'}}>共{order.product_list.length}件商品，合计：￥{order.order_amount}</span>
+                  </Item>
+                </List>
+              );
+            })
+          }
+          {
+            this.state.member_status ?
               ''
               :
               <List renderHeader={() => '选择会员等级'}>
                 {
-                  this.state.member.member_level_list.map((item) => {
+                  this.state.member_level_list.map((item) => {
                     return (
                       <RadioItem key={item.member_level_id}
                                  checked={item.member_level_id === this.state.member_level_id}
@@ -145,7 +188,7 @@ class TeamDetail extends Component {
               </List>
           }
           {
-            this.state.is_load && !this.state.member.member_status ?
+            this.state.is_load && !this.state.member_status ?
               <div className={style.footer}>
                 <div className={style.buttonSubmit}
                      onClick={this.handleSubmit.bind(this)}

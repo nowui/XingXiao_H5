@@ -30,16 +30,15 @@ class Index extends Component {
 
   handleLoad() {
     http({
-      url: '/member/team/list',
+      url: '/order/team/list',
       data: {
-        page_index: 0,
-        page_size: 0,
+
       },
       success: function (data) {
         this.props.dispatch({
           type: 'team/fetch',
           data: {
-            list: data,
+            list: data
           },
         });
       }.bind(this),
@@ -72,8 +71,8 @@ class Index extends Component {
                 {
                   this.props.team.list.map((item) => {
                     var content = <div className={style.teamMoney}>
-                                    <div>当月进货：￥{item.member_total_amount.toFixed(2)}</div>
-                                    <div>全部进货：￥{item.member_total_amount.toFixed(2)}</div>
+                                    <div>当月进货：￥{item.member_month_order_amount}</div>
+                                    <div>全部进货：￥{item.member_all_order_amount}</div>
                                   </div>
                     return (
                       <Item arrow="horizontal"

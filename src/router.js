@@ -7,7 +7,7 @@ import Index from './view/Index';
 import Category from './view/Category';
 import My from './view/My';
 import Product from './view/Product';
-import knowledge from './view/knowledge';
+import Knowledge from './view/Knowledge';
 import ProductDetail from './view/ProductDetail';
 import OrderIndex from './view/OrderIndex';
 import OrderDetail from './view/OrderDetail';
@@ -42,7 +42,7 @@ export default function ({ history }) {
         <Route component={Main}>
           <Route path="index" component={Index} />
           <Route path="product" component={Product} />
-          <Route path="knowledge" component={knowledge} />
+          <Route path="knowledge" component={Knowledge} />
           <Route path="my" component={My} />
         </Route>
         <Route path="category/:category_id" component={Category} />
