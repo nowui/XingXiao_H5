@@ -39,14 +39,6 @@ class Product extends Component {
         var product_price = JSON.parse(data.sku_list[0].product_price);
         var product_total = 0;
 
-        if (storage.getMember().member_level_value == 6) {
-          product_quantity_min = 10;
-        } else if (storage.getMember().member_level_value == 5) {
-          product_quantity_min = 100;
-        } else if (storage.getMember().member_level_value == 4) {
-          product_quantity_min = 600;
-        }
-
         product_total = product_price[0].product_price * product_quantity_min;
 
         this.props.dispatch({
@@ -165,7 +157,7 @@ class Product extends Component {
         </div>
         <div className={style.footer2}>
           <div className={style.checkTotal}>
-            <span className={style.checkTotalText}>总金额: ￥{this.props.product.product_total}</span>
+            <span className={style.checkTotalText}>总金额: ￥{this.props.product.product_total.toFixed(2)}</span>
           </div>
           <div className={style.productBuy} onClick={this.handleBuy.bind(this)}>立即进货</div>
         </div>

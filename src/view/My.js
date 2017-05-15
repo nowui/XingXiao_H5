@@ -98,13 +98,13 @@ class My extends Component {
           <List>
             <Item
               onClick={this.handleBill.bind(this)}
-              extra="账单"
+              extra={'账户：￥' + this.props.my.member_total_amount}
               arrow="horizontal"
             >
               <div className={style.avatar}>
-                <img src={storage.getMember().user_avatar} style={{width: '100%', height: '100%'}}/>
+                <img src={this.props.my.user_avatar} style={{width: '100%', height: '100%'}}/>
               </div>
-              <div className={style.name}>{storage.getMember().user_name}</div>
+              <div className={style.name}>{this.props.my.user_name}</div>
               <div className={style.totalAmount}>
                 {this.props.my.member_level_name}
               </div>
