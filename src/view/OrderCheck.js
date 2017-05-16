@@ -266,7 +266,7 @@ class OrderCheck extends Component {
                     />
                     <div className={style.productListText}>
                       {item.product_name}
-                      <div>× {item.product_quantity}</div>
+                      <div>{item.product_price[0].product_price.toFixed(2)} × {item.product_quantity}</div>
                     </div>
                   </Item>
                 );

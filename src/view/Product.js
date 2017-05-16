@@ -39,7 +39,11 @@ class Product extends Component {
         var product_price = JSON.parse(data.sku_list[0].product_price);
         var product_total = 0;
 
-        product_total = product_price[0].product_price * product_quantity_min;
+        var price = product_price[0].product_price == 12 ? 14 : product_price[0].product_price;
+        var quantity = product_quantity_min >= 25000 ? (product_quantity_min - 15000) : product_quantity_min;
+
+        // product_total = product_price[0].product_price * product_quantity_min;
+        product_total = price * quantity;
 
         this.props.dispatch({
           type: 'product/fetch',
@@ -121,7 +125,7 @@ class Product extends Component {
                 this.props.product.product_price.length > 0 ?
                   <span
                     className={style.productPopupRedText}
-                  >￥{this.props.product.product_price[0].product_price.toFixed(2)}</span>
+                  >￥{this.props.product.product_price[0].product_price == 12 ? new Number(14).toFixed(2) : this.props.product.product_price[0].product_price.toFixed(2)}</span>
                   :
                   ''
               }
@@ -130,7 +134,7 @@ class Product extends Component {
           <WhiteSpace size="lg"/>
           <List>
             <Item>
-              已选：{this.props.product.product_quantity} 个
+              已选：{this.props.product.product_quantity >= 25000 ? (this.props.product.product_quantity - 15000) : this.props.product.product_quantity} 个
             </Item>
             <Item extra={
               <Stepper
@@ -143,11 +147,11 @@ class Product extends Component {
                 useTouch={!window.isPC}
               />}
             >
-              <div className={style.productPopupQuantity}>
-                <div className={style.productPopupQuantityNumber}>{this.props.product.product_quantity}</div>
-              </div>
               购买数量
             </Item>
+            <div className={style.productPopupQuantity}>
+              <div className={style.productPopupQuantityNumber}>{this.props.product.product_quantity >= 25000 ? (this.props.product.product_quantity - 15000) : this.props.product.product_quantity}</div>
+            </div>
           </List>
           <WhiteSpace size="lg"/>
           <div

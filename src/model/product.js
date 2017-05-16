@@ -4,8 +4,8 @@ export default {
 
   state: {
     is_load: false,
-    product_quantity: 2500,
-    product_quantity_min: 2500,
+    product_quantity: 0,
+    product_quantity_min: 0,
     product_total: 0,
     product_id: '',
     product_name: '',
