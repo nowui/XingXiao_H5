@@ -61,6 +61,17 @@ class TeamDetail extends Component {
     }));
   }
 
+  handleClick(member_id) {
+    this.props.dispatch(routerRedux.push({
+      pathname: '/team/level/' + member_id,
+      query: {}
+    }));
+  }
+
+  handleOrderClick(order_id) {
+
+  }
+
   handleSubmit() {
     if (this.state.member_level_id == '') {
       Toast.fail('请选择会员等级', constant.duration);
@@ -84,10 +95,6 @@ class TeamDetail extends Component {
 
       }.bind(this),
     }).post();
-  }
-
-  handleClick() {
-
   }
 
   render() {
@@ -116,8 +123,9 @@ class TeamDetail extends Component {
         <div className={style.page2}>
           <WhiteSpace size="lg"/>
           <List>
-            <Item
-              extra={content}
+            <Item arrow={this.state.is_load && !this.state.member_status ? '' : 'horizontal'}
+                  extra={content}
+                  onClick={this.handleClick.bind(this, this.props.params.member_id)}
             >
               <div className={style.teamAvatar}>
                 <img src={this.state.user_avatar} style={{width: '100%', height: '100%'}}/>
@@ -132,7 +140,7 @@ class TeamDetail extends Component {
             this.state.order_list.map((order) => {
               var order_status = '';
               var order_status_list = constant.order_status_list;
-              for(var i = 0; i < order_status_list.length; i++) {
+              for (var i = 0; i < order_status_list.length; i++) {
                 if (order_status_list[i].order_status_value == order.order_flow) {
                   order_status = order_status_list[i].order_status_name;
 
@@ -141,7 +149,8 @@ class TeamDetail extends Component {
               }
 
               return (
-                <List style={{marginTop: '30px'}} key={order.order_id} onClick={this.handleClick.bind(this, order.order_id)}>
+                <List style={{marginTop: '30px'}} key={order.order_id}
+                      onClick={this.handleOrderClick.bind(this, order.order_id)}>
                   <Item extra={order_status}>
                     {order.order_number}
                   </Item>
@@ -152,7 +161,8 @@ class TeamDetail extends Component {
                           key={product.product_id}
                         >
                           <div className={style.avatar}>
-                            <img src={constant.host + product.product_image_file} style={{width: '100%', height: '100%'}}/>
+                            <img src={constant.host + product.product_image_file}
+                                 style={{width: '100%', height: '100%'}}/>
                           </div>
                           <div className={style.name}>{product.product_name}</div>
                           <div className={style.totalAmount}>

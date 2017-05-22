@@ -36,7 +36,7 @@ class My extends Component {
       success: function (data) {
         this.props.dispatch({
           type: 'my/fetch',
-          data: data,
+          data: data
         });
       }.bind(this),
       complete() {
