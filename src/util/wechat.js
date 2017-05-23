@@ -28,7 +28,6 @@ function auth() {
 
       storage.setOpenId(open_id);
       storage.setToken(token);
-      storage.setOpenId(open_id);
     }
   }
 
