@@ -19,13 +19,18 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    document.body.scrollTop = 0;
+    document.body.scrollTop = this.props.index.scroll_top;
 
     this.handleLoad();
   }
 
   componentWillUnmount() {
-
+    this.props.dispatch({
+      type: 'index/fetch',
+      data: {
+        scroll_top: document.body.scrollTop
+      },
+    });
   }
 
   handleLoad() {
@@ -36,7 +41,7 @@ class Index extends Component {
       },
       success: function (data) {
         this.props.dispatch({
-          type: 'team/fetch',
+          type: 'index/fetch',
           data: {
             list: data
           },
@@ -66,10 +71,10 @@ class Index extends Component {
         <div className={style.page2}>
           <WhiteSpace size="lg"/>
           {
-            this.props.team.list.length > 0 ?
+            this.props.index.list.length > 0 ?
               <List>
                 {
-                  this.props.team.list.map((item) => {
+                  this.props.index.list.map((item) => {
                     var content = <div className={style.teamMoney}>
                                     <div>当月进货：￥{item.member_month_order_amount}</div>
                                     <div>全部进货：￥{item.member_all_order_amount}</div>
@@ -96,7 +101,7 @@ class Index extends Component {
               ''
           }
           {
-            this.state.is_load && this.props.team.list.length == 0 ?
+            this.state.is_load && this.props.index.list.length == 0 ?
               <view className={style.noData}>
                 <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
                 <view className={style.noDataText}>当前没有数据</view>
@@ -112,4 +117,4 @@ class Index extends Component {
 
 Index.propTypes = {};
 
-export default connect(({team}) => ({team}))(Index);
+export default connect(({index}) => ({index}))(Index);
