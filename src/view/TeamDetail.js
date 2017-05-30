@@ -32,7 +32,7 @@ class TeamDetail extends Component {
 
   handleLoad() {
     http({
-      url: '/order/team/find',
+      url: '/member/team/find',
       data: {
         member_id: this.props.params.member_id
       },

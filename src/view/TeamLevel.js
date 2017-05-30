@@ -31,7 +31,7 @@ class TeamLevel extends Component {
 
   handleLoad() {
     http({
-      url: '/order/team/member/level/find',
+      url: '/member/team/member/level/find',
       data: {
         member_id: this.props.params.member_id
       },

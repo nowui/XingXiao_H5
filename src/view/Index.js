@@ -35,7 +35,7 @@ class Index extends Component {
 
   handleLoad() {
     http({
-      url: '/order/team/list',
+      url: '/member/team/list',
       data: {
 
       },
