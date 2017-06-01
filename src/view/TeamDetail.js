@@ -80,7 +80,7 @@ class TeamDetail extends Component {
     }
 
     http({
-      url: '/member/children/update',
+      url: '/member/member/level/update',
       data: {
         member_id: this.state.member_id,
         member_level_id: this.state.member_level_id
