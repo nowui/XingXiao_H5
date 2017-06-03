@@ -31,7 +31,7 @@ class TeamDetail extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/member/team/find',
       data: {
         member_id: this.props.params.member_id
@@ -44,7 +44,7 @@ class TeamDetail extends Component {
           is_load: true
         });
       }.bind(this),
-    }).post();
+    });
   }
 
   handleChange(member_level_id) {
@@ -79,7 +79,7 @@ class TeamDetail extends Component {
       return;
     }
 
-    http({
+    http.request({
       url: '/member/member/level/update',
       data: {
         member_id: this.state.member_id,
@@ -94,7 +94,7 @@ class TeamDetail extends Component {
       complete: function () {
 
       }.bind(this),
-    }).post();
+    });
   }
 
   render() {

@@ -29,7 +29,7 @@ class Product extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/xingxiao/product/find',
       data: {
         product_id: '0551169341324bd2a72d77ff84857922',
@@ -66,7 +66,7 @@ class Product extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleChange(product_quantity) {

@@ -34,7 +34,7 @@ class Index extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/member/team/list',
       data: {
 
@@ -52,7 +52,7 @@ class Index extends Component {
           is_load: true,
         });
       }.bind(this),
-    }).post();
+    });
   }
 
   handleClick(member_id) {

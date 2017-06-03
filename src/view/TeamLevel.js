@@ -30,7 +30,7 @@ class TeamLevel extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       url: '/member/team/member/level/list',
       data: {
         member_id: this.props.params.member_id
@@ -53,7 +53,7 @@ class TeamLevel extends Component {
           is_load: true
         });
       }.bind(this),
-    }).post();
+    });
   }
 
   handleChange(member_level_id) {
@@ -84,8 +84,8 @@ class TeamLevel extends Component {
       return;
     }
 
-    http({
-      url: '/member/children/update',
+    http.request({
+      url: '/member/member/level/update',
       data: {
         member_id: this.props.params.member_id,
         member_level_id: this.state.member_level_id
@@ -99,7 +99,7 @@ class TeamLevel extends Component {
       complete: function () {
 
       }.bind(this),
-    }).post();
+    });
   }
 
   handleClick() {

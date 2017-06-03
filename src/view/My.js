@@ -29,7 +29,7 @@ class My extends Component {
   }
 
   handleLoad() {
-    http({
+    http.request({
       is_toast: false,
       url: '/member/my/find',
       data: {},
@@ -42,7 +42,7 @@ class My extends Component {
       complete() {
 
       },
-    }).post();
+    });
   }
 
   handleBill() {

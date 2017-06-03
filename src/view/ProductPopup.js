@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { List, Popup, Stepper } from 'antd-mobile';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {List, Popup, Stepper} from 'antd-mobile';
 
 import constant from '../util/constant';
 import style from './style.css';
@@ -9,7 +10,7 @@ class ProductPopup extends Component {
     super(props);
 
     this.state = {
-      product_quantity: this.props.product_quantity,
+      product_quantity: this.props.product_quantity
     };
   }
 
@@ -23,7 +24,7 @@ class ProductPopup extends Component {
 
   handleChange(product_quantity) {
     this.setState({
-      product_quantity,
+      product_quantity: product_quantity
     });
 
     this.props.handleChange(product_quantity);
@@ -40,7 +41,7 @@ class ProductPopup extends Component {
       <div className={style.productPopup}>
         <div className={style.productPopupHeader}>
           <div className={style.productPopupImage}>
-            <img className={style.productCardImage} src={constant.host + this.props.product_image} />
+            <img className={style.productCardImage} src={constant.host + this.props.product_image}/>
           </div>
           <div className={style.productPopupText}>
             <span>{this.props.product_name}</span>
@@ -52,7 +53,7 @@ class ProductPopup extends Component {
           <List.Item
             extra={
               <Stepper
-                style={{ width: '100%', minWidth: '2rem' }}
+                style={{width: '100%', minWidth: '2rem'}}
                 showNumber={false}
                 max={this.props.product_stock}
                 min={1}
@@ -74,17 +75,15 @@ class ProductPopup extends Component {
 }
 
 ProductPopup.propTypes = {
-  product_name: React.PropTypes.string.isRequired,
-  product_image: React.PropTypes.string.isRequired,
-  product_price: React.PropTypes.number.isRequired,
-  product_quantity: React.PropTypes.number.isRequired,
-  product_stock: React.PropTypes.number.isRequired,
-  handleChange: React.PropTypes.func.isRequired,
-  handleSubmit: React.PropTypes.func.isRequired,
+  product_name: PropTypes.string.isRequired,
+  product_image: PropTypes.string.isRequired,
+  product_price: PropTypes.number.isRequired,
+  product_quantity: PropTypes.number.isRequired,
+  product_stock: PropTypes.number.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
-ProductPopup.defaultProps = {
-
-};
+ProductPopup.defaultProps = {};
 
 export default ProductPopup;
