@@ -29,4 +29,4 @@ setTimeout(() => {
   document.getElementById("loading").remove();
 
   app.start('#root');
-}, 0.3);
+}, 300);

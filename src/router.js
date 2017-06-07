@@ -26,6 +26,7 @@ import wechat from './util/wechat';
 
 export default function ({ history }) {
   const handleEnter = function (next, replace, callback) {
+    console.log(next);
     wechat.auth();
 
     callback();
