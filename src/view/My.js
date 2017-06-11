@@ -14,7 +14,7 @@ class My extends Component {
     super(props);
 
     this.state = {
-
+      is_load: false
     };
   }
 
@@ -37,6 +37,10 @@ class My extends Component {
         this.props.dispatch({
           type: 'my/fetch',
           data: data
+        });
+
+        this.setState({
+          is_load: true
         });
       }.bind(this),
       complete() {
@@ -90,6 +94,19 @@ class My extends Component {
   render() {
     const Item = List.Item;
 
+    var content = '';
+
+    if (this.state.is_load) {
+      if (this.props.my.member_status) {
+        content = <div className={style.teamMoney}>
+          <div>收入：￥{this.props.my.member_commission_amount}</div>
+          <div>进货：￥{this.props.my.member_order_amount}</div>
+        </div>
+      } else {
+        content = '待审核';
+      }
+    }
+
     return (
       <div>
         <NavBar className={style.header} mode="light" iconName={false}>个人中心</NavBar>
@@ -98,7 +115,7 @@ class My extends Component {
           <List>
             <Item
               onClick={this.handleBill.bind(this)}
-              extra={'账户：￥' + this.props.my.member_total_amount}
+              extra={content}
               arrow="horizontal"
             >
               <div className={style.avatar}>
@@ -121,19 +138,19 @@ class My extends Component {
             </Item>
             <Item style={{paddingLeft: '60px'}}>
               <div className={style.mineOrderItem} onClick={this.handleOrder.bind(this, 'WAIT_PAY')}>
-                <Badge text={this.props.my.WAIT_PAY}>
+                <Badge text={this.props.my.member_wait_pay}>
                   <img src={require('../assets/svg/pay.svg')}/>
                 </Badge>
                 <div className={style.mineOrderItemText}>待付款</div>
               </div>
               <div className={style.mineOrderItem} onClick={this.handleOrder.bind(this, 'WAIT_SEND')}>
-                <Badge text={this.props.my.WAIT_SEND}>
+                <Badge text={this.props.my.member_wait_send}>
                   <img src={require('../assets/svg/send.svg')}/>
                 </Badge>
                 <div className={style.mineOrderItemText}>待发货</div>
               </div>
               <div className={style.mineOrderItem} onClick={this.handleOrder.bind(this, 'WAIT_RECEIVE')}>
-                <Badge text={this.props.my.WAIT_RECEIVE}>
+                <Badge text={this.props.my.member_wait_receive}>
                   <img src={require('../assets/svg/deliver.svg')}/>
                 </Badge>
                 <div className={style.mineOrderItemText}>待收货</div>

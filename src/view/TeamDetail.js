@@ -106,8 +106,8 @@ class TeamDetail extends Component {
     if (this.state.is_load) {
       if (this.state.member_status) {
         content = <div className={style.teamMoney}>
-          <div>当月进货：￥{this.state.member_month_order_amount}</div>
-          <div>全部进货：￥{this.state.member_all_order_amount}</div>
+          <div>收入：￥{this.state.member_commission_amount}</div>
+          <div>进货：￥{this.state.member_order_amount}</div>
         </div>
       } else {
         content = '待审核';

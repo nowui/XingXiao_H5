@@ -21,7 +21,7 @@ function getToken() {
 
   if (token == null) {
     if (constant.is_developer) {
-      return 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTQ1ODEwNjQsImV4cCI6MTUyNjExNzA2NCwiYXV0aG9yaXphdGlvbl9pZCI6ImU4YTJlNTZlNzlhYjRhYTc5NWZjNmNhMWYwNDE2ZjYyIiwidXNlcl9pZCI6IjY2YjhjYWM4ZTkzODQwZGE4NTdmNGRjMDgxMmE0ZTNkIn0.hJ3nf6x0uQjDTL0yQhkloNutPuolwIIa8GQnAxngLmaynYNUKnB1TK_3LaKJcigZhvYjqEarFkkRpPWkFIK-7Q';
+      return 'eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE0OTU0Mjg4ODEsImV4cCI6MTUyNjk2NDg4MSwiYXV0aG9yaXphdGlvbl9pZCI6IjFhZTczMWFjZDE3MzRkMTFhZTI1M2VjNzJhYWVhY2YwIiwidXNlcl9pZCI6IjQwZDRmYTZlNGE3MzRkMzM4NjIzMzY2ZTQzNDViNzg0In0.KfE3zG-W4DCRSanwlMoMvF_d6jUcpCSIDbedPCa_QBVy3JY026GUFYMFtk_9GHlGqZA9-8k2kfR6RojfK_NTrQ';
     } else {
       return '';
     }

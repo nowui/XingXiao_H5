@@ -76,8 +76,8 @@ class Index extends Component {
                 {
                   this.props.index.list.map((item) => {
                     var content = <div className={style.teamMoney}>
-                                    <div>当月进货：￥{item.member_month_order_amount}</div>
-                                    <div>全部进货：￥{item.member_all_order_amount}</div>
+                                    <div>收入：￥{item.member_commission_amount}</div>
+                                    <div>进货：￥{item.member_order_amount}</div>
                                   </div>
                     return (
                       <Item arrow="horizontal"
