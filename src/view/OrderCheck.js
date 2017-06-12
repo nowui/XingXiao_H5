@@ -175,7 +175,7 @@ class OrderCheck extends Component {
         order_delivery_address: this.state.delivery.delivery_address,
         order_message: this.props.form.getFieldValue('order_message'),
         order_pay_type: 'WECHAT_PAY',
-        product_list,
+        product_list: product_list,
         open_id: storage.getOpenId(),
         pay_type: 'H5',
       },

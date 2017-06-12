@@ -5,7 +5,6 @@ const token_key = ('token_' + constant.version);
 const product_key = ('product_' + constant.version);
 const cart_key = ('cart_' + constant.version);
 const delivery_key = ('delivery_' + constant.version);
-const member_key = ('member_' + constant.version);
 
 function getOpenId() {
   return localStorage.getItem(open_id_key);
