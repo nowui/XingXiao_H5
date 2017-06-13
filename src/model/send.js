@@ -1,11 +1,11 @@
 export default {
-  namespace: 'bill',
+
+  namespace: 'send',
 
   state: {
     member_withdraw_amount: 0,
     member_commission_amount: 0,
-    member_order_amount: 0,
-    bill_list: []
+    list: []
   },
 
   reducers: {

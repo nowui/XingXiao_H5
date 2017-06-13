@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
-import {NavBar} from 'antd-mobile';
 
 import style from './style.css';
 
-class knowledge extends Component {
+class Article extends Component {
   constructor(props) {
     super(props);
 
@@ -12,6 +11,13 @@ class knowledge extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '知识库'
+      },
+    });
+
     document.body.scrollTop = 0;
   }
 
@@ -22,9 +28,9 @@ class knowledge extends Component {
   render() {
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" iconName={false}
-        >知识库</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" iconName={false}*/}
+        {/*>知识库</NavBar>*/}
         <div className={style.page}>
           <view className={style.noData}>
             <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
@@ -36,6 +42,6 @@ class knowledge extends Component {
   }
 }
 
-knowledge.propTypes = {};
+Article.propTypes = {};
 
-export default connect(({}) => ({}))(knowledge);
+export default connect(({}) => ({}))(Article);

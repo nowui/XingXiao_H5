@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List} from 'antd-mobile';
+import {WhiteSpace, List} from 'antd-mobile';
 
-import constant from '../util/constant';
 import http from '../util/http';
 
 import style from './style.css';
@@ -19,6 +18,13 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我的团队'
+      },
+    });
+
     document.body.scrollTop = this.props.index.scroll_top;
 
     this.handleLoad();
@@ -67,7 +73,7 @@ class Index extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}>我的团队</NavBar>
+        {/*<NavBar className={style.header} mode="light" iconName={false}>我的团队</NavBar>*/}
         <div className={style.page2}>
           <WhiteSpace size="lg"/>
           {
@@ -117,4 +123,4 @@ class Index extends Component {
 
 Index.propTypes = {};
 
-export default connect(({index}) => ({index}))(Index);
+export default connect(({index, main}) => ({index, main}))(Index);

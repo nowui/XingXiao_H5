@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 
-import { NavBar } from 'antd-mobile';
-
 import http from '../util/http';
 import style from './style.css';
 
@@ -17,6 +15,13 @@ class Qrcode extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我的二维码'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -51,10 +56,10 @@ class Qrcode extends Component {
   render() {
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-        >我的二维码</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+        {/*>我的二维码</NavBar>*/}
         <div className={style.page}>
           {
             this.state.qrcode == '' ?

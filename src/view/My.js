@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Badge} from 'antd-mobile';
+import {WhiteSpace, List, Badge} from 'antd-mobile';
 
-import storage from '../util/storage';
 import http from '../util/http';
 
 import style from './style.css';
@@ -19,6 +18,13 @@ class My extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '个人中心'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -30,7 +36,6 @@ class My extends Component {
 
   handleLoad() {
     http.request({
-      is_toast: false,
       url: '/member/my/find',
       data: {},
       success: function (data) {
@@ -52,42 +57,49 @@ class My extends Component {
   handleBill() {
     this.props.dispatch(routerRedux.push({
       pathname: '/bill/index',
-      query: {},
+      query: {}
     }));
   }
 
   handleOrder(order_status) {
     this.props.dispatch(routerRedux.push({
       pathname: '/order/index/' + order_status,
-      query: {},
+      query: {}
+    }));
+  }
+
+  handleSend() {
+    this.props.dispatch(routerRedux.push({
+      pathname: '/send/index',
+      query: {}
     }));
   }
 
   handleDelivery() {
     this.props.dispatch(routerRedux.push({
       pathname: '/delivery/index/list',
-      query: {},
+      query: {}
     }));
   }
 
   handleFavor() {
     this.props.dispatch(routerRedux.push({
       pathname: '/favor/index',
-      query: {},
+      query: {}
     }));
   }
 
   handleQrcode() {
     this.props.dispatch(routerRedux.push({
       pathname: '/qrcode',
-      query: {},
+      query: {}
     }));
   }
 
   handleTeam() {
     this.props.dispatch(routerRedux.push({
       pathname: '/team/index',
-      query: {},
+      query: {}
     }));
   }
 
@@ -109,7 +121,7 @@ class My extends Component {
 
     return (
       <div>
-        <NavBar className={style.header} mode="light" iconName={false}>个人中心</NavBar>
+        {/*<NavBar className={style.header} mode="light" iconName={false}>个人中心</NavBar>*/}
         <div className={style.page2}>
           <WhiteSpace size="lg"/>
           <List>
@@ -131,7 +143,7 @@ class My extends Component {
           <List>
             <Item
               thumb={require('../assets/svg/form.svg')}
-              extra="查看全部订单" arrow="horizontal"
+              extra="查看全部" arrow="horizontal"
               onClick={this.handleOrder.bind(this, 'ALL')}
             >
               我的订单
@@ -163,6 +175,18 @@ class My extends Component {
           </List>
           <WhiteSpace size="lg"/>
           <List>
+            <Item
+              thumb={require('../assets/svg/vip.svg')} arrow="horizontal"
+              onClick={this.handleSend.bind(this)}
+            >
+              我的库存
+            </Item>
+            <Item
+              thumb={require('../assets/svg/location.svg')} arrow="horizontal"
+              onClick={this.handleDelivery.bind(this)}
+            >
+              我的地址
+            </Item>
             {
               this.props.my.member_status ?
                 <Item
@@ -174,12 +198,6 @@ class My extends Component {
                 :
                 ''
             }
-            <Item
-              thumb={require('../assets/svg/location.svg')} arrow="horizontal"
-              onClick={this.handleDelivery.bind(this)}
-            >
-              我的地址
-            </Item>
           </List>
         </div>
       </div>

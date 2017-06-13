@@ -7,7 +7,7 @@ import {WhiteSpace} from 'antd-mobile';
 import http from '../util/http';
 import style from './style.css';
 
-class FavorIndex extends Component {
+class SendIndex extends Component {
   constructor(props) {
     super(props);
 
@@ -22,7 +22,7 @@ class FavorIndex extends Component {
     this.props.dispatch({
       type: 'main/fetch',
       data: {
-        title: '我的收藏'
+        title: '我的库存'
       },
     });
 
@@ -65,25 +65,44 @@ class FavorIndex extends Component {
     }));
   }
 
+  handleMoney() {
+
+  }
+
   render() {
     return (
       <div>
-        {/*<NavBar*/}
-          {/*className={style.header} mode="light" leftContent="返回"*/}
-          {/*onLeftClick={this.handleBack.bind(this)}*/}
-        {/*>我的收藏</NavBar>*/}
-        <div className={style.page}>
+        <div className={style.header2} style={{backgroundColor: '#ffffff'}}>
+          <div style={{margin: '30px 0px 30px 0px'}}>
+            <div style={{float: 'left', width: '49%'}}>
+              <div style={{marginLeft: '20px'}}>
+                <div>剩余库存</div>
+                <div>{this.props.send.member_withdraw_amount}</div>
+              </div>
+            </div>
+            <div style={{float: 'left', width: '49%', borderLeft: '1px solid #ddd'}}>
+              <div style={{marginLeft: '20px'}}>
+                <div>总共入库</div>
+                <div>{this.props.send.member_commission_amount}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={style.page4}>
           <WhiteSpace size="lg"/>
           <view className={style.noData}>
             <img src={require('../assets/svg/empty.svg')} className={style.noDataImageIcon}></img>
             <view className={style.noDataText}>当前没有数据</view>
           </view>
         </div>
+        <div className={style.footer}>
+          <div className={style.footerButtom} onClick={this.handleMoney.bind(this)}>我要发货</div>
+        </div>
       </div>
     );
   }
 }
 
-FavorIndex.propTypes = {};
+SendIndex.propTypes = {};
 
-export default connect(({favor}) => ({favor}))(FavorIndex);
+export default connect(({send}) => ({send}))(SendIndex);

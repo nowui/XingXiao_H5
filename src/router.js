@@ -7,7 +7,7 @@ import Index from './view/Index';
 import Category from './view/Category';
 import My from './view/My';
 import Product from './view/Product';
-import Knowledge from './view/Knowledge';
+import Article from './view/Article';
 import ProductDetail from './view/ProductDetail';
 import OrderIndex from './view/OrderIndex';
 import OrderDetail from './view/OrderDetail';
@@ -21,6 +21,7 @@ import TeamLevel from './view/TeamLevel';
 import BillIndex from './view/BillIndex';
 import BillMemberIndex from './view/BillMemberIndex';
 import Qrcode from './view/Qrcode';
+import SendIndex from './view/SendIndex';
 
 import wechat from './util/wechat';
 
@@ -43,7 +44,7 @@ export default function ({ history }) {
         <Route component={Main}>
           <Route path="index" component={Index} />
           <Route path="product" component={Product} />
-          <Route path="knowledge" component={Knowledge} />
+          <Route path="article" component={Article} />
           <Route path="my" component={My} />
         </Route>
         <Route path="category/:category_id" component={Category} />
@@ -61,6 +62,7 @@ export default function ({ history }) {
         <Route path="bill/index" component={BillIndex} />
         <Route path="bill/member/index/:member_id" component={BillMemberIndex} />
         <Route path="qrcode" component={Qrcode} />
+        <Route path="send/index" component={SendIndex} />
       </Route>
     </Router>
   );

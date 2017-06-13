@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
-import {NavBar, List, Toast, WhiteSpace, Stepper} from 'antd-mobile';
+import {List, WhiteSpace, Stepper} from 'antd-mobile';
 
 import constant from '../util/constant';
 import storage from '../util/storage';
@@ -19,6 +19,13 @@ class Product extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我要进货'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     this.handleLoad();
@@ -104,9 +111,9 @@ class Product extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" iconName={false}
-        >爆水丸</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" iconName={false}*/}
+        {/*>爆水丸</NavBar>*/}
         <div className={style.page3}>
           {
             this.props.product.is_load ?

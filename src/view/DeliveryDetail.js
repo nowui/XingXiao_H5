@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { createForm } from 'rc-form';
 
-import { Toast, Modal, NavBar, WhiteSpace, List, InputItem, Picker, Switch, Button } from 'antd-mobile';
+import { Toast, Modal, WhiteSpace, List, InputItem, Picker, Switch, Button } from 'antd-mobile';
 
 import constant from '../util/constant';
 import validate from '../util/validate';
@@ -19,6 +19,13 @@ class DeliveryDetail extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '我的地址'
+      },
+    });
+
     document.body.scrollTop = 0;
 
     if (this.props.route.path.indexOf('/edit/') > -1) {
@@ -178,11 +185,11 @@ class DeliveryDetail extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" leftContent="返回"
-          onLeftClick={this.handleBack.bind(this)}
-          rightContent={rightContent}
-        >我的地址</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" leftContent="返回"*/}
+          {/*onLeftClick={this.handleBack.bind(this)}*/}
+          {/*rightContent={rightContent}*/}
+        {/*>我的地址</NavBar>*/}
         <div className={style.page}>
           <WhiteSpace size="lg" />
           <List>
@@ -241,9 +248,9 @@ class DeliveryDetail extends Component {
               />}
             >设为默认地址</List.Item>
           </List>
-          <div style={{ margin: '50px 10px 0px 10px' }}>
-            <Button type="primary" onClick={this.handleSubmit.bind(this)}>保存</Button>
-          </div>
+        </div>
+        <div className={style.footer}>
+          <div className={style.footerButtom} onClick={this.handleSubmit.bind(this)}>保存</div>
         </div>
       </div>
     );

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {routerRedux} from 'dva/router';
 
-import {NavBar, WhiteSpace, List, Stepper, Checkbox} from 'antd-mobile';
+import {WhiteSpace, List, Stepper, Checkbox} from 'antd-mobile';
 
 import constant from '../util/constant';
 import storage from '../util/storage';
@@ -22,6 +22,13 @@ class Cart extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'main/fetch',
+      data: {
+        title: '购物车'
+      },
+    });
+
     document.body.scrollTop = 0;
   }
 
@@ -129,8 +136,6 @@ class Cart extends Component {
 
     storage.setCart(cart);
 
-    this.props.handlCart();
-
     this.setState({
       is_all: is_all,
       is_select: is_select,
@@ -167,13 +172,13 @@ class Cart extends Component {
 
     return (
       <div>
-        <NavBar
-          className={style.header} mode="light" iconName={false}
-          rightContent={this.state.cart_list.length == 0 ? [] : [<div
-            onClick={this.handleRight.bind(this)}
-            key="0"
-          >{this.state.is_edit ? '完成' : '编辑'}</div>]}
-        >购物车</NavBar>
+        {/*<NavBar*/}
+          {/*className={style.header} mode="light" iconName={false}*/}
+          {/*rightContent={this.state.cart_list.length == 0 ? [] : [<div*/}
+            {/*onClick={this.handleRight.bind(this)}*/}
+            {/*key="0"*/}
+          {/*>{this.state.is_edit ? '完成' : '编辑'}</div>]}*/}
+        {/*>购物车</NavBar>*/}
         <div className={style.page2}>
           <WhiteSpace size="lg"/>
           {
